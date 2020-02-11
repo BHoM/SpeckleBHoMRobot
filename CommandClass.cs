@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using RobotOM;
+using SpecklePopup;
 
 namespace SpeckleRobotClient
 {
@@ -27,7 +28,13 @@ namespace SpeckleRobotClient
 
         public void DoCommand(int cmd_id)
         {
-            System.Windows.Forms.MessageBox.Show("Command " + cmd_id.ToString() + " executed.");
+            // open login page using winform
+            SpeckleRobotForm form = new SpeckleRobotForm();
+            form.Show();
+
+            // open account popup using SpecklePopup
+            var signInWindow = new SpecklePopup.SignInWindow(true);
+            signInWindow.ShowDialog();
         }
 
         public double GetExpectedVersion()
@@ -37,7 +44,7 @@ namespace SpeckleRobotClient
 
         public int InstallCommands(RobotCmdList cmd_list)
         {
-            cmd_list.New(1, "My Command 1");
+            cmd_list.New(1, "Account");
             return cmd_list.Count;
         }
     }
