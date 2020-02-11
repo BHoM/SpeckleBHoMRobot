@@ -13,9 +13,31 @@ using System.Diagnostics;
 
 namespace SpeckleRobotClient
 {
-    static class InitialiseBrowser
+    public class SpecklePlugin
     {
         public static ChromiumWebBrowser Browser;
+
+        public SpecklePlugin()
+        {
+            Instance = this;
+            SpeckleCore.SpeckleInitializer.Initialize();
+            SpeckleCore.LocalContext.Init();
+        }
+
+        ///<summary>Gets the only instance of the TestEtoWebkitPlugIn plug-in.</summary>
+        public static SpecklePlugin Instance
+        {
+            get; private set;
+        }
+
+
+        protected void OnShutdown()
+        {
+            if (Browser != null)
+                Browser.Dispose();
+            Cef.Shutdown();
+
+        }
 
         public static void InitializeCef()
         {
@@ -59,17 +81,18 @@ namespace SpeckleRobotClient
                 Browser = new ChromiumWebBrowser(@"http://10.211.55.2:9090/");
             }
 #else
-      var path = Directory.GetParent( Assembly.GetExecutingAssembly().Location );
-      Debug.WriteLine( path, "SPK" );
+            //var path = Directory.GetParent(Assembly.GetExecutingAssembly().Location).ToString();
+            //Debug.WriteLine(path, "SPK");
 
-      var indexPath = string.Format( @"{0}\app\index.html", path );
+            //var indexPath = string.Format(@"{0}\app\index.html", path);
 
-      if ( !File.Exists( indexPath ) )
-        Debug.WriteLine( "Speckle for Rhino: Error. The html file doesn't exists : {0}", "SPK" );
+            //if (!File.Exists(indexPath))
+            //    Debug.WriteLine("SpeckleRobot: Error. The html file doesn't exists : {0}", "SPK");
 
-      indexPath = indexPath.Replace( "\\", "/" );
+            //indexPath = indexPath.Replace("\\", "/");
 
-      Browser = new ChromiumWebBrowser( indexPath );
+            //Browser = new ChromiumWebBrowser(indexPath);
+            Browser = new ChromiumWebBrowser(@"https://hestia.speckle.works/signin");
 #endif
 
             // Allow the use of local resources in the browser
