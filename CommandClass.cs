@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using RobotOM;
 using SpecklePopup;
+using SpeckleUiBase;
 
 namespace SpeckleRobotClient
 {
@@ -14,6 +15,9 @@ namespace SpeckleRobotClient
     public class CommandClass : IRobotAddIn
     {
         private IRobotApplication iapp = null;
+        public static SpeckleUiWindow SpeckleWindow;
+        public static bool Launched = false;
+
         public bool Connect(RobotApplication robot_app, int add_in_id, bool first_time)
         {
             iapp = robot_app;
@@ -28,15 +32,32 @@ namespace SpeckleRobotClient
 
         public void DoCommand(int cmd_id)
         {
-            // open login page using winform
-            SpeckleRobotForm form = new SpeckleRobotForm();
-            form.Show();
+            //// open login page using winform
+            //SpeckleRobotForm form = new SpeckleRobotForm();
+            //form.Show();
 
-            // open account popup using SpecklePopup
-            var signInWindow = new SpecklePopup.SignInWindow(true);
-            signInWindow.ShowDialog();
+            //// open account popup using SpecklePopup
+            //var signInWindow = new SpecklePopup.SignInWindow(true);
+            //signInWindow.ShowDialog();
+
+            // Create a new speckle binding instance
+            var bindings = new SpeckleUiBindingsRobot(iapp);
+
+            // Initialise the window
+#if DEBUG
+            SpeckleWindow = new SpeckleUiWindow( bindings, @"http://localhost:8080/" );
+#else
+            SpeckleWindow = new SpeckleUiWindow(bindings, @"https://matteo-dev.appui.speckle.systems/#/"); // On release, default to the latest ci-ed version from https://appui.speckle.systems
+#endif
+            SpeckleUiBindingsRobot.SpeckleWindow = SpeckleWindow;
+            var helper = new System.Windows.Interop.WindowInteropHelper(SpeckleWindow);
+            helper.Owner = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
+
+            // TODO: find a way to set the parent/owner of the speckle window so it minimises/maximises etc. together with the revit window.
+            SpeckleWindow.Show();
+            SpeckleWindow.Focus();
+            Launched = true;
         }
-
         public double GetExpectedVersion()
         {
             return 10;

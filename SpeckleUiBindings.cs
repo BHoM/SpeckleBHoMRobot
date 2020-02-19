@@ -13,6 +13,9 @@ namespace SpeckleRobotClient
 {
     class SpeckleUiBindingsRobot : SpeckleUIBindings
     {
+        public static IRobotApplication RobotApp;
+        public static IRobotProject Project { get => RobotApp.Project; }
+
         public static SpeckleUiWindow SpeckleWindow;
 
         public List<Action> Queue;
@@ -28,6 +31,13 @@ namespace SpeckleRobotClient
 
         public List<SpeckleStream> LocalState;
 
+        public SpeckleUiBindingsRobot(IRobotApplication _RobotApp) : base()
+        {
+            RobotApp = _RobotApp;
+            Queue = new List<Action>();
+            ClientListWrapper = new SpeckleClientsWrapper();
+        }
+
         public override void AddObjectsToSender(string args)
         {
             throw new NotImplementedException();
@@ -35,7 +45,8 @@ namespace SpeckleRobotClient
 
         public override void AddReceiver(string args)
         {
-            throw new NotImplementedException();
+            var client = JsonConvert.DeserializeObject<dynamic>(args);
+            ClientListWrapper.clients.Add(client);
         }
 
         public override void AddSelectionToSender(string args)
@@ -55,17 +66,17 @@ namespace SpeckleRobotClient
 
         public override string GetApplicationHostName()
         {
-            throw new NotImplementedException();
+            return "Robot";
         }
 
         public override string GetDocumentId()
         {
-            throw new NotImplementedException();
+            return Project.UniqueId;
         }
 
         public override string GetDocumentLocation()
         {
-            throw new NotImplementedException();
+            return Project.FileName;
         }
 
         public override string GetFileClients()
@@ -75,7 +86,7 @@ namespace SpeckleRobotClient
 
         public override string GetFileName()
         {
-            throw new NotImplementedException();
+            return Project.Name;
         }
 
         public override List<ISelectionFilter> GetSelectionFilters()
