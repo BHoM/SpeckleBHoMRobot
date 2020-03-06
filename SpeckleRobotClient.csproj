@@ -249,6 +249,7 @@
     </Compile>
     <Compile Include="SpecklePlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpeckleStateStorage.cs" />
     <Compile Include="SpeckleUiBindings.cs" />
   </ItemGroup>
   <ItemGroup>
