@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -45,7 +45,15 @@ namespace SpeckleRobotClient
 
             // Initialise the window
 #if DEBUG
-            SpeckleWindow = new SpeckleUiWindow( bindings, @"http://localhost:8080/" );
+            try
+            {
+                SpeckleWindow = new SpeckleUiWindow(bindings, @"http://localhost:8080/");
+            }
+            catch (MissingMethodException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            
 #else
             SpeckleWindow = new SpeckleUiWindow(bindings, @"https://matteo-dev.appui.speckle.systems/#/"); // On release, default to the latest ci-ed version from https://appui.speckle.systems
 #endif
