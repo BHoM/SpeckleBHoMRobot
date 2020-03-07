@@ -12,7 +12,6 @@ namespace SpeckleRobotClient
     public static class SpeckleClientsStorageManager
     {
         private static IRobotParamCollection paramCollection;
-        private static IRobotNodeServer nodeServer;
         /// <summary>
         /// Returns the speckle clients present in the current document.
         /// </summary>
@@ -34,9 +33,10 @@ namespace SpeckleRobotClient
             //not sure what this data looks like so this might not work; just throwin this in for the mo
             string clientsString = string.Join(",", wrap.GetStringList() as IList<string>);
 
-            IRobotParamSchema clientSchema = SpeckleClientsSchema.GetSchema();
+            IRobotParamSchema clientSchema = SpeckleClientsSchema.GetSchema(doc);
 
             //temp node to assign param to. will think of something better later
+            IRobotNodeServer nodeServer = doc.Structure.Nodes;
             if (nodeServer.Exist(SpeckleUiBindingsRobot.node_id) == 0) nodeServer.Create(SpeckleUiBindingsRobot.node_id, 0, 0, 0);
 
             IRobotDataObject speckNode = nodeServer.Get(SpeckleUiBindingsRobot.node_id);
