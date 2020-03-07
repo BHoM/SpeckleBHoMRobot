@@ -22,6 +22,10 @@ namespace SpeckleRobotClient
 
         //public ExternalEvent Executor;
 
+        // temp SpeckleNodePlaceholder to attach params for the moment.
+        // will replace with something else later
+        public static int node_id = 420420;
+
         public Timer SelectionTimer;
 
         /// <summary>
