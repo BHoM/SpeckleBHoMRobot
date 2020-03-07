@@ -241,6 +241,7 @@
     <Compile Include="HelperClasses.cs" />
     <Compile Include="Interop.cs" />
     <Compile Include="CommandClass.cs" />
+    <Compile Include="SpeckleClientStorage.cs" />
     <Compile Include="SpeckleRobotForm.cs">
       <SubType>Form</SubType>
     </Compile>
