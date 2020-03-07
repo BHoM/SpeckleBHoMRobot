@@ -35,10 +35,10 @@ namespace SpeckleRobotClient
 
     public static class SpeckleClientsSchema
     {
-        private static IRobotParamSchemaMngr schemaMngr;
-
-        public static IRobotParamSchema GetSchema()
+        public static IRobotParamSchema GetSchema(IRobotProject doc)
         {
+            IRobotParamSchemaMngr schemaMngr = doc.Structure.ExtParams.Schemas;
+
             if (schemaMngr.Exist("SpeckleClientStorage")) 
                 return schemaMngr.GetByName("SpeckleClientStorage");
 
