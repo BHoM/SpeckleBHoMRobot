@@ -61,12 +61,13 @@ namespace SpeckleRobotClient
             //stateSchema.SetParam(doc.UniqueId, "streams", ls);
 
             //this'll do for now -- making a temp node to attach the local state to
-            int node_id = 420420;
-            nodeServer.Create(node_id, 0, 0, 0);
-            IRobotDataObject speckNode = nodeServer.Get(node_id);
+
+            if (nodeServer.Exist(SpeckleUiBindingsRobot.node_id) == 0) nodeServer.Create(SpeckleUiBindingsRobot.node_id, 0, 0, 0);
+
+            IRobotDataObject speckNode = nodeServer.Get(SpeckleUiBindingsRobot.node_id);
             speckNode.SetLabel( (IRobotLabelType)(-1), "SpeckleNodePlaceholder");
 
-            stateSchema.SetParam(nodeServer.GetUniqueId(node_id), "streams", ls);
+            stateSchema.SetParam(nodeServer.GetUniqueId(SpeckleUiBindingsRobot.node_id), "streams", ls);
 
         }
 
