@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -42,6 +42,8 @@ namespace SpeckleRobotClient
 
             // Create a new speckle binding instance
             var bindings = new SpeckleUiBindingsRobot(iapp);
+
+            bindings.InitialiseBinding();
 
             // Initialise the window
 #if DEBUG
