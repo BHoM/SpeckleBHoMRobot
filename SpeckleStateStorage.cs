@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,9 +17,9 @@ namespace SpeckleRobotClient
 
         public static IRobotParamSchema GetSchema( )
         {
-            //If the schema with this name already exists, the function returns its definition.
-            IRobotParamSchema schema = schemaMngr.Create("SpeckleLocalStateStorage");
-
+            if (schemaMngr.Exist("SpeckleLocalStateStorage")) 
+                return schemaMngr.GetByName("SpeckleLocalStateStorage");
+         
             //Robot param can only have string params (no list params); will just needa convert every time?
             schema.Def.AddSimpleParam("streams", null);
 
