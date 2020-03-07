@@ -39,7 +39,9 @@ namespace SpeckleRobotClient
 
         public static IRobotParamSchema GetSchema()
         {
-            //If the schema with this name already exists, the function returns its definition.
+            if (schemaMngr.Exist("SpeckleClientStorage")) 
+                return schemaMngr.GetByName("SpeckleClientStorage");
+
             IRobotParamSchema schema = schemaMngr.Create("SpeckleClientStorage");
             
             schema.Def.AddSimpleParam("clients", null);
