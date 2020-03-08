@@ -47,11 +47,11 @@ namespace SpeckleRobotClient
             // LOCAL STATE
             LocalState = new List<SpeckleStream>();
 
-            Queue.Add(new Action(() =>
-            {
-                LocalState = SpeckleStateManager.ReadState(Project);
-                InjectStateInKits();
-            }));
+            //Queue.Add(new Action(() =>
+            //{
+            //}));
+            LocalState = SpeckleStateManager.ReadState(Project);
+            InjectStateInKits();
 
             SelectionTimer = new Timer(1400) { AutoReset = true, Enabled = true };
             SelectionTimer.Elapsed += SelectionTimer_Elapsed;
@@ -104,6 +104,8 @@ namespace SpeckleRobotClient
         {
             var client = JsonConvert.DeserializeObject<dynamic>(args);
             ClientListWrapper.clients.Add(client);
+
+            SpeckleClientsStorageManager.WriteClients(Project, ClientListWrapper);
         }
 
         public override void AddSelectionToSender(string args)

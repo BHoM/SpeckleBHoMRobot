@@ -75,11 +75,10 @@ namespace SpeckleRobotClient
         {
             //will this work? no idea; tbd
             RobotParamCollection paramCollection = GetParamCollection(doc);
+            if (paramCollection == null)
+                return new List<SpeckleStream>();
 
             string streamParam = paramCollection.GetValue(paramCollection.Find("streams", "SpeckleLocalStateStorage"));
-
-            if (streamParam == null)
-                return new List<SpeckleStream>();
 
             var streamList = streamParam.Split(',').ToList();
             var myState = streamList.Select(str => JsonConvert.DeserializeObject<SpeckleStream>(str)).ToList();
@@ -91,6 +90,9 @@ namespace SpeckleRobotClient
         {
             RobotParamCollection paramCollection = null;
             IRobotNodeServer nodeServer = doc.Structure.Nodes;
+
+            if (!doc.Structure.ExtParams.Schemas.Exist("SpeckleLocalStateStorage"))
+                return null;
 
             doc.Structure.ExtParams.GetAllParamsForSchema(nodeServer.GetUniqueId(SpeckleUiBindingsRobot.node_id),
                 "SpeckleLocalStateStorage", paramCollection);

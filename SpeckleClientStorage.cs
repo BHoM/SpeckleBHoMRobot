@@ -17,10 +17,10 @@ namespace SpeckleRobotClient
         public static SpeckleClientsWrapper ReadClients(IRobotProject doc)
         {
             RobotParamCollection paramCollection = GetParamCollection(doc);
+            if (paramCollection == null) 
+                return null;
 
             string clientsParam = paramCollection.GetValue(paramCollection.Find("clients", "SpeckleClientStorage"));
-            if (clientsParam == null) return null;
-
             var clientsList = clientsParam.Split(',').ToList();
 
             var mySpeckleClients = new SpeckleClientsWrapper();
