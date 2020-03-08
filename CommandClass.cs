@@ -41,22 +41,24 @@ namespace SpeckleRobotClient
             //signInWindow.ShowDialog();
 
             // Create a new speckle binding instance
-            var bindings = new SpeckleUiBindingsRobot(iapp);
-
-            bindings.InitialiseBinding();
+            
 
             // Initialise the window
 #if DEBUG
             try
             {
+                var bindings = new SpeckleUiBindingsRobot(iapp);
+                bindings.InitialiseBinding();
                 SpeckleWindow = new SpeckleUiWindow(bindings, @"http://localhost:8080/");
             }
             catch (MissingMethodException e)
             {
                 Console.WriteLine(e.Message);
             }
-            
+
 #else
+            var bindings = new SpeckleUiBindingsRobot(iapp);
+            bindings.InitialiseBinding();
             SpeckleWindow = new SpeckleUiWindow(bindings, @"https://matteo-dev.appui.speckle.systems/#/"); // On release, default to the latest ci-ed version from https://appui.speckle.systems
 #endif
             SpeckleUiBindingsRobot.SpeckleWindow = SpeckleWindow;
