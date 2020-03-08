@@ -140,7 +140,14 @@ namespace SpeckleRobotClient
 
         public override string GetFileClients()
         {
-            throw new NotImplementedException();
+            var myReadClients = SpeckleClientsStorageManager.ReadClients(Project);
+            if (myReadClients == null)
+                myReadClients = new SpeckleClientsWrapper();
+
+            // Set them up in the class so we're aware of them
+            ClientListWrapper = myReadClients;
+
+            return JsonConvert.SerializeObject(myReadClients.clients);
         }
 
         public override string GetFileName()
@@ -160,7 +167,18 @@ namespace SpeckleRobotClient
 
         public override void RemoveClient(string args)
         {
-            throw new NotImplementedException();
+            var client = JsonConvert.DeserializeObject<dynamic>(args);
+            var index = ClientListWrapper.clients.FindIndex(cl => cl.clientId == client.clientId);
+
+            if (index == -1) return;
+
+            ClientListWrapper.clients.RemoveAt(index);
+
+            var lsIndex = LocalState.FindIndex(x => x.StreamId == (string)client.streamId);
+            if (lsIndex != -1) LocalState.RemoveAt(lsIndex);
+
+            SpeckleStateManager.WriteState(Project, LocalState);
+            SpeckleClientsStorageManager.WriteClients(Project, ClientListWrapper);
         }
 
         public override void RemoveObjectsFromSender(string args)
