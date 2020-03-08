@@ -9,6 +9,23 @@ using Newtonsoft.Json;
 
 namespace SpeckleRobotClient
 {
+    public static class SpeckleClientsSchema
+    {
+        public static IRobotParamSchema GetSchema(IRobotProject doc)
+        {
+            IRobotParamSchemaMngr schemaMngr = doc.Structure.ExtParams.Schemas;
+
+            if (schemaMngr.Exist("SpeckleClientStorage"))
+                return schemaMngr.GetByName("SpeckleClientStorage");
+
+            IRobotParamSchema schema = schemaMngr.Create("SpeckleClientStorage");
+
+            schema.Def.AddSimpleParam("clients", null);
+
+            return schema;
+        }
+    }
+
     public static class SpeckleClientsStorageManager
     {
         /// <summary>
