@@ -11,7 +11,7 @@ using SpeckleUiBase;
 
 namespace SpeckleRobotClient
 {
-    class SpeckleUiBindingsRobot : SpeckleUIBindings
+    public partial class SpeckleUiBindingsRobot : SpeckleUIBindings
     {
         public static IRobotApplication RobotApp;
         public static IRobotProject Project { get => RobotApp.Project; }
@@ -114,11 +114,6 @@ namespace SpeckleRobotClient
         }
 
         public override void AddSender(string args)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void BakeReceiver(string args)
         {
             throw new NotImplementedException();
         }
