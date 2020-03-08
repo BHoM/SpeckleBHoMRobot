@@ -11,12 +11,13 @@ namespace SpeckleRobotClient
 {
     public static class SpeckleClientsStorageManager
     {
-        private static IRobotParamCollection paramCollection;
         /// <summary>
         /// Returns the speckle clients present in the current document.
         /// </summary>
         public static SpeckleClientsWrapper ReadClients(IRobotProject doc)
         {
+            RobotParamCollection paramCollection = GetParamCollection(doc);
+
             string clientsParam = paramCollection.GetValue(paramCollection.Find("clients", "SpeckleClientStorage"));
             if (clientsParam == null) return null;
 
@@ -44,6 +45,17 @@ namespace SpeckleRobotClient
 
             clientSchema.SetParam(nodeServer.GetUniqueId(SpeckleUiBindingsRobot.node_id), "clients", clientsString);
 
+        }
+
+        public static RobotParamCollection GetParamCollection(IRobotProject doc)
+        {
+            RobotParamCollection paramCollection = null;
+            IRobotNodeServer nodeServer = doc.Structure.Nodes;
+
+            doc.Structure.ExtParams.GetAllParamsForSchema(nodeServer.GetUniqueId(SpeckleUiBindingsRobot.node_id),
+                "SpeckleClientStorage", paramCollection);
+
+            return paramCollection;
         }
     }
 }

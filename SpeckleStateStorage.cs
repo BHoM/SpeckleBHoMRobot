@@ -48,14 +48,13 @@ namespace SpeckleRobotClient
     public static class SpeckleStateManager
     {
         readonly static Guid ID = new Guid("{C44D581C-DECC-492A-8CEC-DA3F7D3A2802}");
-        private static IRobotParamCollection paramCollection;
 
         public static void WriteState(IRobotProject doc, List<SpeckleStream> state)
         {
+            IRobotParamSchema stateSchema = SpeckleStateSchema.GetSchema(doc);
+
             //not sure what this data looks like so this might not work; just throwin this in for the mo
             string ls = string.Join(",", state.Select(stream => JsonConvert.SerializeObject(stream)).ToList());
-
-            IRobotParamSchema stateSchema = SpeckleStateSchema.GetSchema(doc);
 
             //oh nooo a prob here -- can't set to whole proj b/c doc ID is str while structure ID is long 😑
             //needa think of somewhere else to put this
@@ -75,22 +74,28 @@ namespace SpeckleRobotClient
         public static List<SpeckleStream> ReadState(IRobotProject doc)
         {
             //will this work? no idea; tbd
+            RobotParamCollection paramCollection = GetParamCollection(doc);
+
             string streamParam = paramCollection.GetValue(paramCollection.Find("streams", "SpeckleLocalStateStorage"));
-            if (streamParam == null) 
+
+            if (streamParam == null)
                 return new List<SpeckleStream>();
 
             var streamList = streamParam.Split(',').ToList();
             var myState = streamList.Select(str => JsonConvert.DeserializeObject<SpeckleStream>(str)).ToList();
 
-            return myState != null ? myState : new List<SpeckleStream>();
+            return myState ?? new List<SpeckleStream>();
         }
 
-        //not sure where this fits yet; `GetStateEntity` in revit plugin, but there isn't really an entity equiv in robot
-        public static IRobotParamSchema GetParamSchema(IRobotProject doc)
+        public static RobotParamCollection GetParamCollection(IRobotProject doc)
         {
-            IRobotParamSchema stateParam = SpeckleStateSchema.GetSchema(doc);
+            RobotParamCollection paramCollection = null;
+            IRobotNodeServer nodeServer = doc.Structure.Nodes;
 
-            return null;
+            doc.Structure.ExtParams.GetAllParamsForSchema(nodeServer.GetUniqueId(SpeckleUiBindingsRobot.node_id),
+                "SpeckleLocalStateStorage", paramCollection);
+
+            return paramCollection;
         }
     }
 
