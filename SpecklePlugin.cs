@@ -48,7 +48,7 @@ namespace SpeckleRobotClient
             var assemblyLocation = Assembly.GetExecutingAssembly().Location;
             var assemblyPath = Path.GetDirectoryName(assemblyLocation);
             var pathSubprocess = Path.Combine(assemblyPath, "CefSharp.BrowserSubprocess.exe");
-            CefSharpSettings.LegacyJavascriptBindingEnabled = true;
+            //CefSharpSettings.LegacyJavascriptBindingEnabled = true;
             var settings = new CefSettings
             {
                 BrowserSubprocessPath = pathSubprocess
