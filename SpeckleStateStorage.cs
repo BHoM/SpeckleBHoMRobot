@@ -28,6 +28,8 @@ namespace SpeckleRobotClient
         }
     }
 
+    // not sure yet what this will be for. Revit has DataStorage and Entity (described by schema)
+    // but Robot only has Params described by schema
     static class UniqueSchemaLocalState
     {
         public static IRobotParamSchema GetSchema(IRobotProject doc)
@@ -68,7 +70,6 @@ namespace SpeckleRobotClient
             speckNode.SetLabel( (IRobotLabelType)(-1), "SpeckleNodePlaceholder");
 
             stateSchema.SetParam(nodeServer.GetUniqueId(SpeckleUiBindingsRobot.node_id), "streams", ls);
-
         }
 
         public static List<SpeckleStream> ReadState(IRobotProject doc)
