@@ -53,6 +53,9 @@ namespace SpeckleRobotClient
             LocalState = SpeckleStateManager.ReadState(Project);
             InjectStateInKits();
 
+            InjectRobotAppInKits();
+
+
             SelectionTimer = new Timer(1400) { AutoReset = true, Enabled = true };
             SelectionTimer.Elapsed += SelectionTimer_Elapsed;
         }
@@ -73,7 +76,29 @@ namespace SpeckleRobotClient
         }
 
         /// <summary>
-        /// Injects the current lolcal state in any speckle kit initialiser class that has a "LocalRobotState" property defined. 
+        /// Injects the Robot app in any speckle kit Initialiser class that has a 'RobotApp' property defined. 
+        /// </summary>
+        public void InjectRobotAppInKits()
+        {
+            var assemblies = SpeckleCore.SpeckleInitializer.GetAssemblies();
+            foreach (var ass in assemblies)
+            {
+                var types = ass.GetTypes();
+                foreach (var type in types)
+                {
+                    if (type.GetInterfaces().Contains(typeof(SpeckleCore.ISpeckleInitializer)))
+                    {
+                        if (type.GetProperties().Select(p => p.Name).Contains("RobotApp"))
+                        {
+                            type.GetProperty("RobotApp").SetValue(null, RobotApp);
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Injects the current local state in any speckle kit initialiser class that has a "LocalRobotState" property defined. 
         /// This can then be used to determine what existing speckle baked objects exist in the current doc and either modify/delete whatever them in the conversion methods.
         /// </summary>
         public void InjectStateInKits()
