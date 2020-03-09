@@ -89,13 +89,14 @@ namespace SpeckleRobotClient
 
         public static RobotParamCollection GetParamCollection(IRobotProject doc)
         {
-            RobotParamCollection paramCollection = null;
+            RobotParamCollection paramCollection = new RobotParamCollection();
             IRobotNodeServer nodeServer = doc.Structure.Nodes;
 
             if (!doc.Structure.ExtParams.Schemas.Exist("SpeckleLocalStateStorage"))
                 return null;
 
-            doc.Structure.ExtParams.GetAllParamsForSchema(nodeServer.GetUniqueId(SpeckleUiBindingsRobot.node_id),
+            var nodeId = nodeServer.GetUniqueId(SpeckleUiBindingsRobot.node_id);
+            doc.Structure.ExtParams.GetAllParamsForSchema(nodeId,
                 "SpeckleLocalStateStorage", paramCollection);
 
             return paramCollection;

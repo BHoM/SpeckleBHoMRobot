@@ -66,7 +66,7 @@ namespace SpeckleRobotClient
 
         public static RobotParamCollection GetParamCollection(IRobotProject doc)
         {
-            RobotParamCollection paramCollection = null;
+            RobotParamCollection paramCollection = new RobotParamCollection();
             IRobotNodeServer nodeServer = doc.Structure.Nodes;
 
             doc.Structure.ExtParams.GetAllParamsForSchema(nodeServer.GetUniqueId(SpeckleUiBindingsRobot.node_id),
