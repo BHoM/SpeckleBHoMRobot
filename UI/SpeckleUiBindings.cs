@@ -8,8 +8,9 @@ using Newtonsoft.Json;
 using RobotOM;
 using SpeckleCore;
 using SpeckleUiBase;
+using SpeckleRobotClient.Storage;
 
-namespace SpeckleRobotClient
+namespace SpeckleRobotClient.UI
 {
     public partial class SpeckleUiBindingsRobot : SpeckleUIBindings
     {

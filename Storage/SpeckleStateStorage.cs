@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 using RobotOM;
 using SpeckleCore;
 using Newtonsoft.Json;
+using SpeckleRobotClient.UI;
 
-namespace SpeckleRobotClient
+namespace SpeckleRobotClient.Storage
 {
     public static class SpeckleStateSchema
     {

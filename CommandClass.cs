@@ -5,6 +5,7 @@ using System.Text;
 using RobotOM;
 using SpecklePopup;
 using SpeckleUiBase;
+using SpeckleRobotClient.UI;
 
 namespace SpeckleRobotClient
 {

@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 using RobotOM;
 using SpeckleCore;
 using Newtonsoft.Json;
+using SpeckleRobotClient.Storage;
 
-namespace SpeckleRobotClient
+namespace SpeckleRobotClient.UI
 {
     public partial class SpeckleUiBindingsRobot
     {

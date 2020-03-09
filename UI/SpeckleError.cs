@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpeckleRobotClient
+namespace SpeckleRobotClient.UI
 {
     // getting MissingMethodException when upgrading SpeckleCore, so just pasting this in here for now
     public class SpeckleError

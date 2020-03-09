@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using RobotOM;
 using Newtonsoft.Json;
 
-namespace SpeckleRobotClient
+namespace SpeckleRobotClient.Storage
 {
     /// <summary>
     /// Wrapper class to manage the storage of speckle clients.
