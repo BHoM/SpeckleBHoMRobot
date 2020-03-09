@@ -3,7 +3,8 @@
 A Speckle Client for Robot that deals in BHoMObjects.
 
 Milestones:
-- (Currently WIP) Create a Winforms Chromium browser to expose Speckle client into, using [CEFSharp](http://cefsharp.github.io/) as done in [SpeckleRhino](https://github.com/BHoM/SpeckleRhinoFork)
+- ~~Create a Winforms Chromium browser to expose Speckle client into, using [CEFSharp](http://cefsharp.github.io/) as done in [SpeckleRhino](https://github.com/BHoM/SpeckleRhinoFork)~~
+- (Currently WIP) Implement SpeckleUi as done in [SpeckleRevitReboot](https://github.com/speckleworks/SpeckleRevitReboot)
 - Receive data from Speckle 
 - Convert any BHoMObject into RobotOM by using the existing Robot_Engine converts of [`Robot_Toolkit`](https://github.com/BHoM/Robot_Toolkit)
 - Plan out how to get similar behaviour of Robot_Toolkit in terms of Push and Pull. Implementation of such a functionality would be well into the future. 
