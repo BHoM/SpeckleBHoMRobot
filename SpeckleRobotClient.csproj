@@ -244,7 +244,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Storage\HelperClasses.cs" />
-    <Compile Include="Interop.cs" />
     <Compile Include="CommandClass.cs" />
     <Compile Include="UI\Receiver.cs" />
     <Compile Include="Storage\SpeckleClientStorage.cs" />
