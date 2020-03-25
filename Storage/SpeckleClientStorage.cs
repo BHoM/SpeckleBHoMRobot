@@ -39,7 +39,7 @@ namespace SpeckleRobotClient.Storage
                 return null;
 
             string clientsParam = paramCollection.GetValue(paramCollection.Find("clients", "SpeckleClientStorage"));
-            string strSep = ",,";
+            string strSep = "][";
             List<string> clientsList = clientsParam.Split(new[] { strSep }, StringSplitOptions.None).ToList();
 
             var mySpeckleClients = new SpeckleClientsWrapper();
@@ -51,7 +51,7 @@ namespace SpeckleRobotClient.Storage
         public static void WriteClients(IRobotProject doc, SpeckleClientsWrapper wrap)
         {
             //not sure what this data looks like so this might not work; just throwin this in for the mo
-            string clientsString = string.Join(",,", wrap.GetStringList() as IList<string>);
+            string clientsString = string.Join("][", wrap.GetStringList() as IList<string>);
 
             IRobotParamSchema clientSchema = SpeckleClientsSchema.GetSchema(doc);
 

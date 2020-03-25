@@ -57,7 +57,7 @@ namespace SpeckleRobotClient.Storage
             IRobotParamSchema stateSchema = SpeckleStateSchema.GetSchema(doc);
 
             //not sure what this data looks like so this might not work; just throwin this in for the mo
-            string ls = string.Join(",,", state.Select(stream => JsonConvert.SerializeObject(stream)).ToList());
+            string ls = string.Join("][", state.Select(stream => JsonConvert.SerializeObject(stream)).ToList());
 
             //oh nooo a prob here -- can't set to whole proj b/c doc ID is str while structure ID is long 😑
             //needa think of somewhere else to put this
@@ -82,7 +82,7 @@ namespace SpeckleRobotClient.Storage
 
             string streamParam = paramCollection.GetValue(paramCollection.Find("streams", "SpeckleLocalStateStorage"));
 
-            string strSep = ",,";
+            string strSep = "][";
             List<string> streamList = streamParam.Split(new[] { strSep }, StringSplitOptions.None).ToList();
             List<SpeckleStream> myState = streamList.Select(str => JsonConvert.DeserializeObject<SpeckleStream>(str)).ToList();
 
